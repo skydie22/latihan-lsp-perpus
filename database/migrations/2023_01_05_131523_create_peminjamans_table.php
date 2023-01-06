@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePeminjamenTable extends Migration
+class CreatePeminjamansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreatePeminjamenTable extends Migration
      */
     public function up()
     {
-        Schema::create('peminjamen', function (Blueprint $table) {
+        Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('buku_id');
-            $table->foreign('buku_id')->references('id')->on('bukus');
-            $table->dateTime('tanggal_peminjaman');
-            $table->dateTime('tanggal_pengembalian');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('buku_id')->constrained();
+            $table->date('tanggal_peminjaman');
+            $table->date('tanggal_pengembalian')->nullable();
             $table->enum('kondisi_buku_saat_dipinjam', ['baik', 'rusak']);
             $table->enum('kondisi_buku_saat_dikembalikan', ['baik', 'rusak']);
             $table->float('denda')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -35,6 +33,6 @@ class CreatePeminjamenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('peminjamen');
+        Schema::dropIfExists('peminjaman');
     }
 }
