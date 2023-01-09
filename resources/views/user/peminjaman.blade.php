@@ -4,6 +4,11 @@
 <div class="container">
     @include('component.user.sidebar')
 
+    @if (Session('status'))
+    <div class="alert alert-{{ session('status') }}" role="alert"></i>
+        <strong>{{ session('message') }}</strong>
+    </div>
+@endif
 
     <div class="row">
         <div class="col-6">

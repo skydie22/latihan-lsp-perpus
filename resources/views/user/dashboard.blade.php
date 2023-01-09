@@ -4,12 +4,14 @@
 <div class="container">
 
     @include('component.user.sidebar')
+    <h3 class="mb-3">pemberitahuan</h3>
      @foreach ($pemberitahuan as $p)
          <div class="alert alert-info">
              {{ $p->isi }}
          </div>
      @endforeach
- 
+         
+     <h3 class="mb-3">katalog buku</h3>
      <div class="row">
          @foreach ($buku as $b)
              <div class="col-3">

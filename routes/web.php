@@ -4,8 +4,10 @@ use App\Models\Buku;
 use App\Models\Kategori;
 use App\Models\Pemberitahuan;
 use App\Models\Peminjaman;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Laravel\Ui\Presets\React;
 
@@ -53,23 +55,27 @@ Route::prefix('user')->group(function() {
     });
 
     Route::post('submit_peminjaman' , function(Request $request){
-        $tanggal_peminjaman = $request->tanggal_peminjaman;
-        $buku_id = $request->buku_id;
-        $kondisi_buku_saat_dipinjam = $request->kondisi_buku_saat_dipinjam;
-        $user_id = $request->user_id;
+        // $tanggal_peminjaman = $request->tanggal_peminjaman;
+        // $buku_id = $request->buku_id;
+        // $kondisi_buku_saat_dipinjam = $request->kondisi_buku_saat_dipinjam;
+        // $user_id = $request->user_id;
 
 
-        $peminjaman = Peminjaman::create([
-            "tanggal_peminjaman" => $tanggal_peminjaman,
-            "buku_id" => $buku_id,
-            "kondisi_buku_saat_dipinjam" => $kondisi_buku_saat_dipinjam,
-            'user_id' => $user_id
-        ]);
+        // $peminjaman = Peminjaman::create([
+        //     "tanggal_peminjaman" => $tanggal_peminjaman,
+        //     "buku_id" => $buku_id,
+        //     "kondisi_buku_saat_dipinjam" => $kondisi_buku_saat_dipinjam,
+        //     'user_id' => $user_id
+        // ]);
+
+        //berlaku kalau nama name di input type dan field di db sama
+        $peminjaman = Peminjaman::create($request->all());
 
         if ($peminjaman) {
-            return redirect()->route('user.peminjaman');
+            return redirect()->route('user.peminjaman')
+            ->with('status' , 'success')->with('message' , 'berhasil menambah data');
         }
-        return redirect()->back();
+        return redirect()->back()->with('status', 'danger')->with('message' , 'gagal menambah data');
     })->name('submit_peminjaman');
 
     Route::get('pengembalian' , function(){
@@ -83,6 +89,20 @@ Route::prefix('user')->group(function() {
     Route::get('profil' , function(){
         return view('user.profil');
     })->name('user.profil');
+
+    Route::put('profil' , function(Request $request){
+        $id = Auth::user()->id;
+       $user =  User::find($id)->update($request->all());
+       $user2 = User::find($id)->update([
+        'password' => Hash::make($request->password)
+       ]);
+
+       if ($user && $user2) {
+        return redirect()->back()->with('status' , 'success')->with('message' , 'berhasil mengupdate profil');
+       }
+       return redirect()->back()->with('status' , 'danger')->with('message' , 'berhasil mengupdate profil');
+
+    })->name('user.profil.update');
 });
 
 Route::prefix('admin')->group(function() {
