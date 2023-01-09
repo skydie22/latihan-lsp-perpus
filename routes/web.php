@@ -92,12 +92,24 @@ Route::prefix('user')->group(function() {
 
     Route::put('profil' , function(Request $request){
         $id = Auth::user()->id;
-       $user =  User::find($id)->update($request->all());
-       $user2 = User::find($id)->update([
-        'password' => Hash::make($request->password)
+     
+        $imageName = time().'.'.$request->foto->extension();
+
+        $request->foto->move(public_path('img' , $imageName));
+        
+        $user =  User::find($id)->update($request->all());
+       if($request->password != null){
+
+           $user2 = User::find($id)->update([
+            'password' => Hash::make($request->password)
+           ]);
+       }
+       
+       $user3 = User::find($id)->update([
+        'foto' => $imageName
        ]);
 
-       if ($user && $user2) {
+       if ($user && $user2 && $user3) {
         return redirect()->back()->with('status' , 'success')->with('message' , 'berhasil mengupdate profil');
        }
        return redirect()->back()->with('status' , 'danger')->with('message' , 'berhasil mengupdate profil');

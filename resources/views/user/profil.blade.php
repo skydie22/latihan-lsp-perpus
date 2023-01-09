@@ -17,14 +17,15 @@
          <h4>Update profile</h4>
       </div>
       <div class="card-body">
-         <form method="POST">
+         <form method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <table class="table table-stripped bordered">
                <tr>
                   <th>Foto</th>
                   <td>
-               </td>
+                     <input type="file" name="foto" class="form-control">
+                     </td>
             </tr>
             <tr>
                   <th>Nama Lengkap</th>
