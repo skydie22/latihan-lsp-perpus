@@ -41,7 +41,7 @@
                <tr>
                   <th>password</th>
                   <td>
-                     <input  class="form-control" type="password" name="passwowrd" placeholder="sandi belum di ubah">
+                     <input  class="form-control" type="password" name="password" placeholder="sandi belum di ubah">
                   </td>
                </tr>
                <tr>
