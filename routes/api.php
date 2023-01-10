@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\BukuApiController;
 use App\Http\Controllers\API\TestApiController;
 use App\Http\Controllers\API\UserController;
 use App\Models\Kategori;
@@ -29,6 +30,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 Route::post('login' , [UserController::class, 'login']);
+Route::get('buku' , [BukuApiController::class , 'index']);
+Route::post('buku' , [BukuApiController::class , 'storeBuku']);
+Route::delete('buku/{id} ' , [BukuApiController::class , 'destroy']);
 
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function(){
     Route::get('/user', function(){
