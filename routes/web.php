@@ -95,7 +95,7 @@ Route::prefix('user')->group(function() {
      
         $imageName = time().'.'.$request->foto->extension();
 
-        $request->foto->move(public_path('img' , $imageName));
+        $request->foto->move(public_path('img'),$imageName);
         
         $user =  User::find($id)->update($request->all());
        if($request->password != null){
