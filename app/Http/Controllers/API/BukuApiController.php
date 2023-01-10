@@ -34,14 +34,20 @@ class BukuApiController extends Controller
         ]);
 
         return response()->json([
-            'data' => ' buku berhasil di tambahkan'
-        ]); 
+            'message' => ' buku berhasil di tambahkan'
+        ],200); 
 
     }
 
     public function update(Request $request , $id)
     {
-        
+        $buku = Buku::findOrFail($id);
+        $buku->update($request->all());
+    
+        return response()->json([
+            'message' => 'berhasil mengupdate buku',
+            'data' => $buku
+        ],200);
     }
 
     public function destroy($id)
@@ -50,8 +56,8 @@ class BukuApiController extends Controller
         $buku->delete();
 
         return response()->json([
-            'message' => 'buku berhasil di hapus'
-        ]);
+            'message' => 'berhasil menghapus buku'
+        ],200);
     }
 
 

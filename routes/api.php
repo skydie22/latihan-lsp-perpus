@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\BukuApiController;
+use App\Http\Controllers\API\PeminjamanApiController;
 use App\Http\Controllers\API\TestApiController;
 use App\Http\Controllers\API\UserController;
 use App\Models\Kategori;
@@ -30,9 +31,19 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 Route::post('login' , [UserController::class, 'login']);
+
 Route::get('buku' , [BukuApiController::class , 'index']);
 Route::post('buku' , [BukuApiController::class , 'storeBuku']);
+Route::put('buku/{id}' , [BukuApiController::class , 'update']);
 Route::delete('buku/{id} ' , [BukuApiController::class , 'destroy']);
+
+Route::get('peminjaman' , [PeminjamanApiController::class , 'index']);
+Route::post('peminjaman' , [PeminjamanApiController::class , 'store']);
+// Route::put('peminjaman/{id}' , [PeminjamanApiController::class , 'update']);
+Route::delete('peminjaman/{id}' , [PeminjamanApiController::class , 'destroy']);
+
+
+
 
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function(){
     Route::get('/user', function(){
