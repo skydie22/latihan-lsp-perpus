@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\TestApiController;
 use App\Http\Controllers\API\UserController;
 use App\Models\Kategori;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function(){
-    Route::get('user' , [UserController::class , 'index']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('user', function () {
+        return response()->json([
+            'data' => User::all()
+        ]);
+    })->middleware('role:admin');
+});
+
+
+Route::post('login' , [UserController::class, 'login']);
+
+Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function(){
+    Route::get('/user', function(){
+        return response()->json([
+            'data' => User::all()
+        ]);
+    });
+});
+
+Route::middleware(['auth:sanctum', 'role:user'])->prefix('user')->group(function(){
+   
 });

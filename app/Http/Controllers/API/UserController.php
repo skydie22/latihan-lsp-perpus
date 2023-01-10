@@ -5,13 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        return $this->middleware(['auth' , 'role:admin']);
-    }
 
     public function index()
     {
@@ -24,8 +21,27 @@ class UserController extends Controller
             );
     }
 
-    public function login()
+    public function login(Request $request)
     {
-        
+        //Check User Credential
+        $credentials = [
+            'username' => $request['username'],
+            'password' => $request['password'],
+        ];
+
+        if (!Auth::attempt($credentials)) {
+            return response()->json(
+                [
+                    "message" => "Invalid Credential"
+                ]
+
+            );
+        }
+        return response()->json(
+            [
+                "data" => Auth::user(),
+                "token" => auth()->user()->createToken('secret')->plainTextToken
+            ]
+        );
     }
 }

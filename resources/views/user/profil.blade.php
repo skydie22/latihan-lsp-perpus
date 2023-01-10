@@ -12,6 +12,11 @@
    </div>
 @endif
 
+{{-- <center class="mb-5">
+
+   <img src="" class="rounded-circle" style="width: 150px;" alt="Avatar" />
+</center> --}}
+
    <div class="card">
       <div class="card-header">
          <h4>Update profile</h4>
