@@ -10,11 +10,24 @@ class PeminjamanApiController extends Controller
 {
     public function index()
     {
-        $peminjaman = Peminjaman::all();
+        //klo ini datany masih mentah
+        $peminjaman = Peminjaman::get();
 
+    //biar rapih  datanya
+        $data = [];
+        foreach ($peminjaman as $key => $value) {
+            $datas['buku'] = $value->buku->judul;
+            $datas['user'] = $value->user->fullname;
+            $datas['tgl_peminjaman'] = $value->tanggal_peminjaman;
+            $datas['tgl_pengembalian'] = $value->tanggal_pengembalian;
+            $datas['kondisi_buku_saat_dipinjam'] = $value->kondisi_buku_saat_dipinjam;
+            $datas['kondisi_buku_saat_dikembalikan'] = $value->kondisi_buku_saat_dikembalikan;
+            $datas['denda'] = $value->denda;
+            $data[]=$datas;
+        }
         return response()->json([
-            "data" => $peminjaman
-        ],200);
+$data
+        ]);
     }
 
     public function store(Request $request)

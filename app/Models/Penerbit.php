@@ -13,4 +13,9 @@ class Penerbit extends Model
     {
         return $this->hasMany(Buku::class);
     }
+
+    protected $fillable = [
+        'kode',
+        'nama'
+    ];
 }

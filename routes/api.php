@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\API\ApiBukuController;
 use App\Http\Controllers\API\BukuApiController;
+use App\Http\Controllers\API\kategoriApiController;
 use App\Http\Controllers\API\PeminjamanApiController;
+use App\Http\Controllers\API\PenerbitApiController;
 use App\Http\Controllers\API\TestApiController;
 use App\Http\Controllers\API\UserController;
 use App\Models\Kategori;
@@ -32,18 +35,33 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('login' , [UserController::class, 'login']);
 
-Route::get('buku' , [BukuApiController::class , 'index']);
-Route::post('buku' , [BukuApiController::class , 'storeBuku']);
-Route::put('buku/{id}' , [BukuApiController::class , 'update']);
-Route::delete('buku/{id} ' , [BukuApiController::class , 'destroy']);
+
+Route::prefix('buku')->group(function () {
+    
+    Route::get('/' , [ApiBukuController::class , 'index']);
+    Route::post('/store' , [ApiBukuController::class , 'store']);
+    Route::put('/update/{id}' , [ApiBukuController::class , 'update']);
+    Route::delete('delete/{id} ' , [ApiBukuController::class , 'destroy']);
+});
 
 Route::get('peminjaman' , [PeminjamanApiController::class , 'index']);
 Route::post('peminjaman' , [PeminjamanApiController::class , 'store']);
 // Route::put('peminjaman/{id}' , [PeminjamanApiController::class , 'update']);
 Route::delete('peminjaman/{id}' , [PeminjamanApiController::class , 'destroy']);
 
+ Route::prefix('penerbit')->group(function () {
+    Route::get('/' , [PenerbitApiController::class , 'index']);
+    Route::post('/store' , [PenerbitApiController::class , 'store' ]);
+    Route::put('/update/{id}' , [PenerbitApiController::class , 'update']);
+    Route::delete('/delete/{id}' , [PenerbitApiController::class] , 'destroy');
+ });
 
-
+ Route::prefix('kategori')->group(function () {
+    Route::get('/' , [kategoriApiController::class , 'index']);
+    Route::post('/store' , [kategoriApiController::class , 'store']);
+    Route::put('/update/{id}' , [kategoriApiController::class , 'update']);
+    Route::delete('/delete/{id}' , [kategoriApiController::class ,  'destroy' ]);
+ });
 
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function(){
     Route::get('/user', function(){

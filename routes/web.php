@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\testApiController;
 use App\Models\Buku;
 use App\Models\Kategori;
 use App\Models\Pemberitahuan;
@@ -25,6 +26,7 @@ use Laravel\Ui\Presets\React;
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Auth::routes();
 

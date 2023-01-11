@@ -16,8 +16,8 @@ class CreateBukusTable extends Migration
         Schema::create('bukus', function (Blueprint $table) {
             $table->id();
             $table->string('judul' , 125);
-            $table->foreignId('kategori_id')->constrained();
-            $table->foreignId('penerbit_id')->constrained();
+            $table->foreignId('kategori_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('penerbit_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('pengarang' , 125);
             $table->year('tahun_terbit');
             $table->string('isbn' , 50)->nullable();
