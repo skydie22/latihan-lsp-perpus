@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'fullname' => 'Ezhar Mahesa',
             'username' => 'ezhar',
             'password' => bcrypt('password'),			
-            'verif' => 'default',
+            'verif' => 'verified',
             'role' => 'admin',
             'join_date' => '2023-01-06',
             'foto' => ''
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'username' => 'dwi',
             'password' => bcrypt('password'),			
             'kelas' => 'XII RPL',	
-            'verif' => 'default',
+            'verif' => 'verified',
             'role' => 'user',
             'join_date' => '2023-01-06',
             'foto' => ''
@@ -48,7 +48,6 @@ class UserSeeder extends Seeder
             'username' => 'zoe',
             'password' => bcrypt('password'),			
             'kelas' => 'XII RPL',	
-            'verif' => 'default',
             'role' => 'user',
             'join_date' => '2023-01-06',
             'foto' => ''

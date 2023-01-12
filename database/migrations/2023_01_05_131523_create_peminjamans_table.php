@@ -20,7 +20,7 @@ class CreatePeminjamansTable extends Migration
             $table->date('tanggal_peminjaman');
             $table->date('tanggal_pengembalian')->nullable();
             $table->enum('kondisi_buku_saat_dipinjam', ['baik', 'rusak']);
-            $table->enum('kondisi_buku_saat_dikembalikan', ['baik', 'rusak']);
+            $table->enum('kondisi_buku_saat_dikembalikan', ['baik', 'rusak' , 'hilang']);
             $table->float('denda')->nullable();
             $table->timestamps();
         });

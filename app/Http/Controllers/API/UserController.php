@@ -36,7 +36,14 @@ class UserController extends Controller
                 ]
 
             );
+
         }
+
+        if (Auth::user()->verif == 'unverified') {
+            Auth::logout();
+            return redirect()->back();
+        }
+        
         return response()->json(
             [
                 "data" => Auth::user(),

@@ -12,10 +12,10 @@
    </div>
 @endif
 
-{{-- <center class="mb-5">
+<center class="mb-5">
 
-   <img src="" class="rounded-circle" style="width: 150px;" alt="Avatar" />
-</center> --}}
+   <img src="/img/{{ Auth::user()->foto == null ? 'profile.png' : Auth::user()->foto }}" class="rounded-circle" style="width: 150px;" alt="Avatar" />
+</center>
 
    <div class="card">
       <div class="card-header">

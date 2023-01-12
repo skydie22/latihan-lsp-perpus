@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->text('password' , 50);
             $table->string('kelas' , 50)->nullable();
             $table->text('alamat')->nullable();
-            $table->string('verif' , 50)->default('verified');
+            $table->enum('verif' , ['verified' , 'unverified'])->default('unverified');
             $table->enum('role', ['admin' , 'user']);
             $table->date('join_date');
             $table->date('terakhir_login')->nullable();

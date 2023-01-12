@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Identitas extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'nama_app',
+        'alamat_app',
+        'email_app',
+        'nomor-hp',
+        'foto'
+    ];
 }

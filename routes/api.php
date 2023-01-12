@@ -1,6 +1,12 @@
 <?php
 
 use App\Http\Controllers\API\ApiBukuController;
+use App\Http\Controllers\API\ApiIdentitasController;
+use App\Http\Controllers\API\ApiKategoriController;
+use App\Http\Controllers\API\ApiPeminjamanController;
+use App\Http\Controllers\API\ApiPenerbitController;
+use App\Http\Controllers\API\ApiPengembalianController;
+use App\Http\Controllers\API\ApiPesanController;
 use App\Http\Controllers\API\BukuApiController;
 use App\Http\Controllers\API\kategoriApiController;
 use App\Http\Controllers\API\PeminjamanApiController;
@@ -37,31 +43,49 @@ Route::post('login' , [UserController::class, 'login']);
 
 
 Route::prefix('buku')->group(function () {
-    
     Route::get('/' , [ApiBukuController::class , 'index']);
     Route::post('/store' , [ApiBukuController::class , 'store']);
-    Route::put('/update/{id}' , [ApiBukuController::class , 'update']);
-    Route::delete('delete/{id} ' , [ApiBukuController::class , 'destroy']);
+    Route::post('/update/{id}' , [ApiBukuController::class , 'update']);
+    Route::delete('/delete/{id} ' , [ApiBukuController::class , 'destroy']);
 });
 
-Route::get('peminjaman' , [PeminjamanApiController::class , 'index']);
-Route::post('peminjaman' , [PeminjamanApiController::class , 'store']);
-// Route::put('peminjaman/{id}' , [PeminjamanApiController::class , 'update']);
-Route::delete('peminjaman/{id}' , [PeminjamanApiController::class , 'destroy']);
+Route::prefix('peminjaman')->group(function (){
+    Route::get('/' , [ApiPeminjamanController::class , 'index']);
+    Route::post('/store' , [ApiPeminjamanController::class , 'store']);
+    Route::post('/update/{id}' , [ApiPeminjamanController::class , 'update']);
+    Route::delete('/delete/{id}' , [ApiPeminjamanController::class , 'destroy']);
+});
+
+Route::prefix('pengembalian')->group(function (){
+    Route::get('/' , [ApiPengembalianController::class , 'index']);
+    Route::post('/store' ,[ApiPengembalianController::class , 'store']);
+});
 
  Route::prefix('penerbit')->group(function () {
-    Route::get('/' , [PenerbitApiController::class , 'index']);
-    Route::post('/store' , [PenerbitApiController::class , 'store' ]);
-    Route::put('/update/{id}' , [PenerbitApiController::class , 'update']);
-    Route::delete('/delete/{id}' , [PenerbitApiController::class] , 'destroy');
- });
+    Route::get('/' , [ApiPenerbitController::class , 'index']);
+    Route::post('/store' , [ApiPenerbitController::class , 'store' ]);
+    Route::post('/update/{id}' , [ApiPenerbitController::class , 'update']);
+    Route::delete('/delete/{id}' , [ApiPenerbitController::class, 'destroy']);
+});
 
  Route::prefix('kategori')->group(function () {
-    Route::get('/' , [kategoriApiController::class , 'index']);
-    Route::post('/store' , [kategoriApiController::class , 'store']);
-    Route::put('/update/{id}' , [kategoriApiController::class , 'update']);
-    Route::delete('/delete/{id}' , [kategoriApiController::class ,  'destroy' ]);
+    Route::get('/' , [ApiKategoriController::class , 'index']);
+    Route::post('/store' , [ApiKategoriController::class , 'store']);
+    Route::post('/update/{id}' , [ApiKategoriController::class , 'update']);
+    Route::delete('/delete/{id}' , [ApiKategoriController::class ,  'destroy' ]);
  });
+
+ Route::prefix('pesan')->group(function () {
+    Route::get('/' , [ApiPesanController::class , 'index']);
+    Route::post('/store' , [ApiPesanController::class , 'store']);
+    Route::post('/update/{id}' , [ApiPesanController::class , 'update']);
+    Route::delete('/delete/{id}' , [ApiPesanController::class , 'destroy']);
+ });
+
+Route::prefix('identitas')->group(function () {
+    Route::get('/' , [ApiIdentitasController::class , 'index']);
+    Route::post('/update/{id}' , [ApiIdentitasController::class , 'update']);
+});
 
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function(){
     Route::get('/user', function(){

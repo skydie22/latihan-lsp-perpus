@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Buku;
+use App\Models\Pesan;
 use Illuminate\Http\Request;
 
-class ApiBukuController extends Controller
+class ApiPesanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class ApiBukuController extends Controller
      */
     public function index()
     {
-        $buku = Buku::all();
+        $pesan = Pesan::all();
 
         return response()->json([
-            'data' => $buku
+            'data' => $pesan
         ]);
     }
 
@@ -30,21 +30,19 @@ class ApiBukuController extends Controller
      */
     public function store(Request $request)
     {
-        $buku = Buku::create([
+        $pesan = Pesan::create([
+            'penerima_id' => $request->penerima_id,
+            'pengirim_id' => $request->pengirim_id,
             'judul' => $request->judul,
-            'kategori_id' => $request->kategori_id,
-            'penerbit_id' => $request->penerbit_id,
-            'pengarang' => $request->pengarang,
-            'tahun_terbit' => $request->tahun_terbit,
-            'isbn' => $request->isbn,
-            'j_buku_baik' => $request->j_buku_baik,
-            'j_buku_buruk' => $request->j_buku_buruk,
+            'isi'=>$request->isi,
+            'status'=>$request->status,
+            'tanggal_kirim'=> $request->tanggal_kirim
         ]);
 
         return response()->json([
-            'msg' => 'Data created', 
-            'data' => $buku
-        ], 200);
+            'msg' => 'data created',
+            'data' => $pesan
+        ],200);
     }
 
     /**
@@ -67,13 +65,14 @@ class ApiBukuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $buku = Buku::findOrFail($id);
-        $buku->update($request->all());
-        return response()->json(
-            [
-                'msg' => 'Data updated', 
-                'data' => $buku
-            ], 200);
+        $pesan = Pesan::findOrFail($id);
+
+        $pesan->update($request->all());
+
+        return response()->json([
+            'msg' => 'data updated',
+            'data' => $pesan
+        ],200);
     }
 
     /**
@@ -84,11 +83,12 @@ class ApiBukuController extends Controller
      */
     public function destroy($id)
     {
-        $buku  = Buku::findOrFail($id);
-        $buku->delete();
+        $pesan = Pesan::findOrFail($id);
+        $pesan->delete();
 
-        return response()->json([
-            'message' => 'berhasil menghapus buku'
-        ],200);
+         return response()->json([
+            'msg' => 'data deleted',
+            'data' => $pesan
+        ],200); 
     }
 }

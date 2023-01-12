@@ -22,7 +22,7 @@ class BukuSeeder extends Seeder
             'tahun_terbit' => '2012',
             'isbn' => '23265768687686',
             'j_buku_baik' => 25,
-            'j_buku_rusak' => 10,
+            'j_buku_rusak' => 0,
             'foto' => ''
         ]);
 
@@ -34,7 +34,7 @@ class BukuSeeder extends Seeder
             'tahun_terbit' => '2015',
             'isbn' => '21232138797997',
             'j_buku_baik' => 30,
-            'j_buku_rusak' => 10,
+            'j_buku_rusak' => 0,
             'foto' => ''
         ]);
 
@@ -46,7 +46,7 @@ class BukuSeeder extends Seeder
             'tahun_terbit' => '2022',
             'isbn' => '123213213213213213',
             'j_buku_baik' => 25,
-            'j_buku_rusak' => 10,
+            'j_buku_rusak' => 0,
             'foto' => ''
         ]);
 
