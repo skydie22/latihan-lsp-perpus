@@ -14,7 +14,13 @@ class PemberitahuanController extends Controller
      */
     public function index()
     {
-        //
+        $datas = Pemberitahuan::all();
+
+        return response()->json([
+            "msg" => "Succsessfully Fetch All Data",
+            "data" => $datas
+        ]);
+    
     }
 
     /**

@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\ApiBukuController;
 use App\Http\Controllers\API\ApiIdentitasController;
 use App\Http\Controllers\API\ApiKategoriController;
+use App\Http\Controllers\API\ApiPemberitahuanController;
 use App\Http\Controllers\API\ApiPeminjamanController;
 use App\Http\Controllers\API\ApiPenerbitController;
 use App\Http\Controllers\API\ApiPengembalianController;
@@ -85,6 +86,18 @@ Route::prefix('pengembalian')->group(function (){
 Route::prefix('identitas')->group(function () {
     Route::get('/' , [ApiIdentitasController::class , 'index']);
     Route::post('/update/{id}' , [ApiIdentitasController::class , 'update']);
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/' , [UserController::class , 'all_admin']);
+    Route::post('/store' , [UserController::class , 'storeAdmin'] );
+    Route::post('/update/{id}' , [UserController::class , 'updateAdmin'] );
+    Route::delete('/delete/{id}' , [UserController::class , 'destroyAdmin'] );
+    
+});
+
+Route::prefix('pemberitahuan' )->group(function () {
+    Route::get('/' , [ApiPemberitahuanController::class , 'index']);
 });
 
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function(){
