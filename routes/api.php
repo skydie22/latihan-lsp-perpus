@@ -42,6 +42,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('login' , [UserController::class, 'login']);
 
+Route::get('pengguna' , [UserController::class , 'get_user']);
+Route::post('pengguna/update/{id}' , [UserController::class , 'update_user']);
 
 Route::prefix('buku')->group(function () {
     Route::get('/' , [ApiBukuController::class , 'index']);
@@ -88,13 +90,9 @@ Route::prefix('identitas')->group(function () {
     Route::post('/update/{id}' , [ApiIdentitasController::class , 'update']);
 });
 
-Route::prefix('admin')->group(function () {
-    Route::get('/' , [UserController::class , 'all_admin']);
-    Route::post('/store' , [UserController::class , 'storeAdmin'] );
-    Route::post('/update/{id}' , [UserController::class , 'updateAdmin'] );
-    Route::delete('/delete/{id}' , [UserController::class , 'destroyAdmin'] );
+// Route::prefix('admin')->group(function () {
     
-});
+// });
 
 Route::prefix('pemberitahuan' )->group(function () {
     Route::get('/' , [ApiPemberitahuanController::class , 'index']);
@@ -106,6 +104,10 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(functi
             'data' => User::all()
         ]);
     });
+    Route::get('/' , [UserController::class , 'all_admin']);
+    Route::post('/store' , [UserController::class , 'storeAdmin'] );
+    Route::post('/update/{id}' , [UserController::class , 'updateAdmin'] );
+    Route::delete('/delete/{id}' , [UserController::class , 'destroyAdmin'] );
 });
 
 Route::middleware(['auth:sanctum', 'role:user'])->prefix('user')->group(function(){

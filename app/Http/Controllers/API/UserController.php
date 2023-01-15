@@ -199,4 +199,34 @@ class UserController extends Controller
         ]);
     }
 
+
+    public function get_user() {
+        $anggota = User::where('role' , 'user')->get();
+
+        return response()->json([
+            'data' => $anggota
+        ]);
+    }
+
+    public function update_user(Request $request , $id) {
+        $anggota = User::where('role' , 'user')->where('id' , $id);
+
+        $anggota->update([
+            'fullname' => $request->fullname,
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
+            'nis' => $request->nis,
+            'alamat' => $request->alamat,
+            'kelas' => $request->kelas
+        ]);
+
+        return response()->json([
+            'msg' => 'data updated',
+            'data' => $anggota
+        ]);
+
+
+        
+    }
+
 }
