@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Stmt\TryCatch;
 
 class UserController extends Controller
 {
@@ -57,7 +58,7 @@ class UserController extends Controller
 
 
     //get admin
-    public function all_admin()
+    public function get_admin()
     {
         $datas = User::where('role', 'admin')->get();
 
@@ -72,6 +73,8 @@ class UserController extends Controller
  //store admin
     public function storeAdmin(Request $request)
     {
+
+
 
         // Validating Data that stored
         $rules = [
@@ -200,7 +203,8 @@ class UserController extends Controller
     }
 
 
-    public function get_user() {
+    public function getAnggota() 
+    {
         $anggota = User::where('role' , 'user')->get();
 
         return response()->json([
@@ -208,7 +212,78 @@ class UserController extends Controller
         ]);
     }
 
-    public function update_user(Request $request , $id) {
+
+    public function StoreAnggota(Request $request)
+    {
+        $rules = [
+            'nis' => 'required',
+            'fullname' => 'required',
+            'username' => 'required|unique:users',
+            'password' => 'required',
+            'kelas' => 'required',
+            'alamat' => 'required'
+        ];
+
+        $validator = Validator::make($request->all() , $rules);
+
+        $rules = [
+            'nis' => 'required',
+            'fullname' => 'required',
+            'username' => 'required|unique:users',
+            'password' => 'required',
+            'kelas' => 'required',
+            'alamat' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+
+            return response()->json(
+                [
+                    'message' => $errors
+                ]
+            );
+        }
+
+
+        // Creating Data
+        try {
+            $anggota = User::create([
+                'kode' => '',
+                'nis' => $request->nis,
+                'fullname' => $request->fullname,
+                'username' => $request->username,
+                'password' => bcrypt($request->password),
+                'kelas' => $request->kelas,
+                'alamat' => $request->alamat,
+                'role' => 'user',
+                'join_date' => Carbon::now()
+            ]);
+        } catch (Exception $e) {
+            return response()->json(
+                [
+                    "message" => $e
+                ]
+            );
+        }
+
+        // Response Json
+        $data = User::find($anggota->id)->update([
+            'kode' => 'U' . $anggota->id
+        ]);
+
+        return response()->json(
+            [
+                "message" => "Succsess Create Data",
+                "data" => $data
+            ]
+        );
+    }
+
+    public function updateAnggota(Request $request , $id) 
+    {
         $anggota = User::where('role' , 'user')->where('id' , $id);
 
         $anggota->update([
@@ -228,5 +303,7 @@ class UserController extends Controller
 
         
     }
+
+
 
 }

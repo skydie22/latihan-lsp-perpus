@@ -1,8 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
-   @include('component.user.sidebar')
 
    <div class="card">
        <div class="card-header">
@@ -14,7 +13,7 @@
             @csrf
                <div class="mb-3">
                    <label>Tanggal Peminjaman</label>
-                   <input type="date" class="form-control" name="tanggal_peminjaman">
+                   <input type="date" class="form-control" name="tanggal_peminjaman" value="{{ date('Y-m-d') }}" readonly>
                </div>
 
                <div class="mb-3">

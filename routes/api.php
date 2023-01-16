@@ -42,8 +42,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('login' , [UserController::class, 'login']);
 
-Route::get('pengguna' , [UserController::class , 'get_user']);
-Route::post('pengguna/update/{id}' , [UserController::class , 'update_user']);
 
 Route::prefix('buku')->group(function () {
     Route::get('/' , [ApiBukuController::class , 'index']);
@@ -71,19 +69,19 @@ Route::prefix('pengembalian')->group(function (){
     Route::delete('/delete/{id}' , [ApiPenerbitController::class, 'destroy']);
 });
 
- Route::prefix('kategori')->group(function () {
+Route::prefix('kategori')->group(function () {
     Route::get('/' , [ApiKategoriController::class , 'index']);
     Route::post('/store' , [ApiKategoriController::class , 'store']);
     Route::post('/update/{id}' , [ApiKategoriController::class , 'update']);
     Route::delete('/delete/{id}' , [ApiKategoriController::class ,  'destroy' ]);
- });
+});
 
- Route::prefix('pesan')->group(function () {
+Route::prefix('pesan')->group(function () {
     Route::get('/' , [ApiPesanController::class , 'index']);
     Route::post('/store' , [ApiPesanController::class , 'store']);
     Route::post('/update/{id}' , [ApiPesanController::class , 'update']);
     Route::delete('/delete/{id}' , [ApiPesanController::class , 'destroy']);
- });
+});
 
 Route::prefix('identitas')->group(function () {
     Route::get('/' , [ApiIdentitasController::class , 'index']);
@@ -92,24 +90,24 @@ Route::prefix('identitas')->group(function () {
 
 // Route::prefix('admin')->group(function () {
     
-// });
+    // });
 
-Route::prefix('pemberitahuan' )->group(function () {
-    Route::get('/' , [ApiPemberitahuanController::class , 'index']);
-});
-
-Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function(){
+    Route::prefix('pemberitahuan' )->group(function () {
+        Route::get('/' , [ApiPemberitahuanController::class , 'index']);
+    });
+    
+    Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function(){
     Route::get('/user', function(){
         return response()->json([
             'data' => User::all()
         ]);
     });
-    Route::get('/' , [UserController::class , 'all_admin']);
+    Route::get('/' , [UserController::class , 'get_admin']);
     Route::post('/store' , [UserController::class , 'storeAdmin'] );
     Route::post('/update/{id}' , [UserController::class , 'updateAdmin'] );
     Route::delete('/delete/{id}' , [UserController::class , 'destroyAdmin'] );
+    Route::post('/anggota/add', [UserController::class , 'storeAnggota']);
 });
 
-Route::middleware(['auth:sanctum', 'role:user'])->prefix('user')->group(function(){
-   
-});
+Route::get('pengguna' , [UserController::class , 'getAnggota']);
+Route::post('pengguna/update/{id}' , [UserController::class , 'updateAnggota']);
